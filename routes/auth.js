@@ -3,7 +3,7 @@ var bcrypt = require("bcrypt-inzi");
 var jwt = require('jsonwebtoken');
 var postmark = require("postmark");
 var { SERVER_SECRET } = require("../core/index");
-var client = new postmark.Client("");
+var client = new postmark.Client("b13e0642-c597-4c7d-a9d7-ca1d3cb3a3a2");
 
 
 var { userModle, otpModel } = require("../dbrepo/modles");
@@ -12,7 +12,10 @@ var api = express.Router()
 
 
 api.post('/signup', (req, res, next) => {
-
+    console.log(req.body.userName)
+    console.log(req.body.userEmail)
+    console.log(req.body.userPhone)
+    console.log(req.body.userPassword)
     if (!req.body.userName
         || !req.body.userEmail
         || !req.body.userPhone
@@ -175,18 +178,19 @@ api.post("/logout",(req, res, next) =>{
 
 api.post("/forget-password", (req, res, next) => {
 
-    if (!req.body.email) {
+    console.log(req.body.forgetEmail)
+    if (!req.body.forgetEmail) {
 
         res.status(403).send(`
             please send email in json body.
             e.g:
             {
-                "email": "malikasinger@gmail.com"
+                "forgetEmail": "malikasinger@gmail.com"
             }`)
         return;
     }
 
-    userModle.findOne({ email: req.body.email },
+    userModle.findOne({ email: req.body.forgetEmail },
         function (err, user) {
             if (err) {
                 res.status(500).send({
@@ -196,13 +200,13 @@ api.post("/forget-password", (req, res, next) => {
                 const otp = Math.floor(getRandomArbitrary(11111, 99999))
 
                 otpModel.create({
-                    email: req.body.email,
+                    email: req.body.forgetEmail,
                     otpCode: otp
                 }).then((doc) => {
 
                     client.sendEmail({
                         "From": "zubair_student@sysborg.com",
-                        "To": req.body.email,
+                        "To": req.body.forgetEmail,
                         "Subject": "Reset your password",
                         "TextBody": `Here is your pasword reset code: ${otp}`
                     }).then((status) => {
@@ -228,28 +232,33 @@ api.post("/forget-password", (req, res, next) => {
 
 api.post("/forget-password-step-2", (req, res, next) => {
 
-    if (!req.body.email && !req.body.otpCode && !req.body.newPassword) {
+    console.log(req.body.otpCode)
+    console.log(req.body.newPassword)
+    console.log(req.body.emailVarification)
+
+    if (!req.body.emailVarification && !req.body.otpCode && !req.body.newPassword) {
 
         res.status(403).send(`
-            please send email & otp in json body.
+            please send emailVarification & otp in json body.
             e.g:
             {
-                "email": "malikasinger@gmail.com",
+                "emailVarification": "malikasinger@gmail.com",
                 "newPassword": "xxxxxx",
                 "otp": "xxxxx" 
             }`)
         return;
     }
 
-    userModle.findOne({ email: req.body.email },
+    userModle.findOne({ email: req.body.emailVarification },
         function (err, user) {
+            console.log(err)
             if (err) {
                 res.status(500).send({
                     message: "an error occured: " + JSON.stringify(err)
                 });
             } else if (user) {
 
-                otpModel.find({ email: req.body.email },
+                otpModel.find({ email: req.body.emailVarification },
                     function (err, otpData) {
 
                         

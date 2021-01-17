@@ -5,24 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 
-    <form action="#" onsubmit="return signup()">
+    <form class="form" action="#" onsubmit="return signup()">
 
-        <label >Use Name</label>
+        <label >Use Name</label><br>
         <input type="text" required placeholder="user Name" id="name"> <br>
-        <label >Email</label>
+        <label >Email</label><br>
         <input type="email" required placeholder="Email" id="email"> <br>
-        <label >phone</label>
-        <input type="number" required placeholder="phone" id="phone"> <br>
-        <label >password</label>
+        <label >phone</label><br>
+        <input type="number"  required placeholder="phone" id="phone"> <br>
+        <label >password</label><br>
         <input type="password" required placeholder="password" id="password"> <br>
 
         <button>submit</button>
 
         <a href="./login.html">Login</a>
+
 
 
     </form>
