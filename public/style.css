@@ -11,6 +11,10 @@ body{
     background-color: #6a62d2;
 }
 
+p{
+    justify-content: baseline;
+}
+
 .form{
     /* border: 1px solid black; */
     border-radius: 10px;

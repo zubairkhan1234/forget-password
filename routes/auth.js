@@ -3,7 +3,7 @@ var bcrypt = require("bcrypt-inzi");
 var jwt = require('jsonwebtoken');
 var postmark = require("postmark");
 var { SERVER_SECRET } = require("../core/index");
-var client = new postmark.Client("");
+var client = new postmark.Client("b13e0642-c597-4c7d-a9d7-ca1d3cb3a3a2");
 
 
 var { userModle, otpModel } = require("../dbrepo/modles");
@@ -212,18 +212,24 @@ api.post("/forget-password", (req, res, next) => {
                     }).then((status) => {
 
                         console.log("status: ", status);
-                        res.send("email sent with otp")
+                        res.send({
+                            status: 200,
+                            message: "email sent with otp"
+                        })
 
                     })
 
                 }).catch((err) => {
                     console.log("error in creating otp: ", err);
-                    res.status(500).send("unexpected error ")
+                    res.send({
+ 
+                        message:"unexpected error "
+                    })
                 })
 
 
             } else {
-                res.status(403).send({
+                res.send({
                     message: "user not found"
                 });
             }
@@ -264,7 +270,7 @@ api.post("/forget-password-step-2", (req, res, next) => {
                         
 
                         if (err) {
-                            res.status(500).send({
+                            res.send({
                                 message: "an error occured: " + JSON.stringify(err)
                             });
                         } else if (otpData) {
@@ -282,24 +288,27 @@ api.post("/forget-password-step-2", (req, res, next) => {
 
                                 bcrypt.stringToHash(req.body.newPassword).then(function (hash) {
                                     user.update({ password: hash }, {}, function (err, data) {
-                                        res.send("password updated");
+                                        res.send({
+                                            status:200,
+                                            message:"password updated"
+                                        });
                                     })
                                 })
 
                             } else {
-                                res.status(401).send({
+                                res.send({
                                     message: "incorrect otp"
                                 });
                             }
                         } else {
-                            res.status(401).send({
+                            res.send({
                                 message: "incorrect otp"
                             });
                         }
                     })
 
             } else {
-                res.status(403).send({
+                res.send({
                     message: "user not found"
                 });
             }

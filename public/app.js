@@ -28,29 +28,16 @@ function signup() {
     })
         .then(function (response) {
             console.log(response);
-
-            if (response.data == 200) {
+            if (response.data.status === 200) {
                 alert(response.data.message)
-                window.location = "/login.html"
-                // console.log(response.data)
+                location.href = "./login.html"
             } else {
                 alert(response.data.message)
-                // console.log(response.data.message)
             }
-            // alert(response.data.message)
-            // window.location.href = "home.html"
         })
         .catch(function (error) {
-            // console.log(error.response.data.message);
             alert(error.response.data.message)
         });
-
-
-
-
-
-    // console.log(userData)
-
 
     document.getElementById("name").value = ""
     document.getElementById("email").value = ""
@@ -65,7 +52,6 @@ function login() {
     var loginEmail = document.getElementById('loginEmail').value
     var loginPassword = document.getElementById('loginPassword').value
 
-    // console.log(loginEmail, loginPassword)
     axios({
         method: 'post',
         url: 'http://localhost:5000/login',
@@ -77,12 +63,11 @@ function login() {
     })
 
         .then(function (response) {
-            // console.log(response);
             alert(response.data.message)
             window.location = "/home.html"
         })
         .catch(function (error) {
-            // console.log(error.response.data.message);
+
             alert(error.response.data.message)
         });
 
@@ -108,7 +93,7 @@ function forgetPassword() {
 
 
     }).then((response) => {
-        console.log(response.data.message)
+        console.log(response)
         if (response.data.status == 200) {
             alert(response.data.message)
             window.location.href = "./passwordVarification.html"
