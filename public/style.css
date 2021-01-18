@@ -12,7 +12,8 @@ body{
 }
 
 p{
-    justify-content: baseline;
+    color: rgb(104, 99, 99);
+    
 }
 
 .form{

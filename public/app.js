@@ -1,7 +1,7 @@
 
 
 
-// const url = 'http://localhost:5000';
+const url = 'http://localhost:5000';
 
 
 
@@ -16,7 +16,7 @@ function signup() {
 
     axios({
         method: 'post',
-        url: 'http://localhost:5000/signup',
+        url: url + "/signup",
         data: {
             userName: userName,
             userEmail: userEmail,
@@ -54,7 +54,7 @@ function login() {
 
     axios({
         method: 'post',
-        url: 'http://localhost:5000/login',
+        url: url + '/login',
         data: {
             email: loginEmail,
             password: loginPassword
@@ -85,7 +85,7 @@ function forgetPassword() {
     console.log(forgetEmail)
     axios({
         method: 'post',
-        url: 'http://localhost:5000/forget-password',
+        url: url + '/forget-password',
         data: ({
             forgetEmail:forgetEmail
         }),
@@ -118,7 +118,7 @@ function forgetPasswordStep2() {
     console.log(emailVarification)
     axios({
         method: 'post',
-        url: 'http://localhost:5000/forget-password-step-2',
+        url:  url +'/forget-password-step-2',
         data: ({
             emailVarification: emailVarification,
             newPassword: newPassword,
@@ -157,7 +157,7 @@ function userData() {
     axios({
 
         method: 'get',
-        url: 'http://localhost:5000/profile',
+        url:  url +'/profile',
         credentials: 'include'
 
     }).then((response) => {
@@ -177,7 +177,7 @@ function logout() {
 
     axios({
         method: 'post',
-        url: 'http://localhost:5000/logout',
+        url:  url + '/logout',
 
     }).then((response) => {
         console.log(response)
