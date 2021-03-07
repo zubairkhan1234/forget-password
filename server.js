@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
             const nowDate = new Date().getTime()
             const diff = nowDate - issueDate
 
-            if (diff > 30000) {
+            if (diff > 300000) {
                 res.status(401).send('Token Expired')
 
             } else {
